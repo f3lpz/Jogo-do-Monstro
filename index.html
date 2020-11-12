@@ -1,0 +1,69 @@
+<meta charset=UTF-8">
+<script src="https://unpkg.com/vue"></script>
+<link rel="stylesheet" href=".//style.css">
+
+<div id="app">
+    <div :class="'header'">
+        <h1>Jogo do Monstro</h1>
+        <button v-show="logado" @click="logado=!logado">Sair</button>
+    </div>
+    <div v-show="!logado" :class="'box'">
+        <span>Digite seu nome: </span>
+        <input type="text" v-model="nome" @click="$event.target.value=''" />
+        <button @click="logado=!logado" :style="'backgroundColor: lightseagreen'">Entrar</button>
+    </div>
+    <div v-show="logado">
+        <div :class="'box'">
+            <div :class="'players'">
+                <h2>{{ nome }}</h2>
+                <div :class="'progress'">
+                    <div :style="playerHealth"></div>
+                </div>
+                <div>{{ player }}%</div>
+            </div>
+            <div :class="'players'">
+                <h2>Monstro</h2>
+                <div :class="'progress'">
+                    <div :style="monstroHealth"> </div>
+                </div>
+                <div>{{ monstro }}%</div>
+            </div>
+        </div>
+        <div v-if="fim" :class="'box'">
+            <span v-if="resultado=='Ganhou'" :style="'color: green'">
+                <strong>{{ nome }} derrotou o MONSTRO !!!</strong>
+            </span>
+            <span v-else :style="'color: red'">
+                <strong>{{ nome }} Perdeu =/ !!!</strong>
+            </span>
+        </div>
+        <div :class="'box'">
+            <button @click="inicio" v-if="!start" :style="'backgroundColor: #474787'">INICIAR NOVO JOGO</button>
+            <template v-else>
+                <button @click="ataque" :style="'backgroundColor: #e55039'">ATAQUE</button>
+                <button @click="skill" :style="'backgroundColor: #1e3799'">HABILIDADE</button>
+                <button @click="heal" :style="'backgroundColor: #079992'">CURAR</button>
+                <button @click="start=!start" :style="'backgroundColor: #747d8c'">DESISTIR</button>
+            </template>
+        </div>
+        <div v-if="(atkPlayer != '') && (atkMonstro != '')" :class="'box'">
+            <ul>
+                <li v-for="game in jogadas">
+                    <p v-if='atkPlayer[game-1]!=0' :class="'jogador'">
+                        {{ nome }} causou <strong>{{ atkPlayer[jogadas-game] }}</strong> de dano ao
+                        <strong>Monstro</strong>
+                    </p>
+                    <p v-else :class="'cura'">
+                        {{ nome }} curou <strong>{{ curaPlayer[jogadas-game] }}</strong> de <strong>Vida</strong>
+                    </p>
+                    <p :class="'monster'">
+                        O <strong>Monstro</strong> causou <strong>{{ atkMonstro[jogadas-game] }}</strong> de dano em
+                        {{ nome }}
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="./app.js"></script>

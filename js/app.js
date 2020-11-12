@@ -37,6 +37,7 @@ new Vue({
             this.atkPlayer = [];
             this.monstro = 100;
             this.atkMonstro = [];
+            this.curaPlayer = [];
             this.jogadas = 0;
             this.start = true;
             this.resultado = 'Jogando';

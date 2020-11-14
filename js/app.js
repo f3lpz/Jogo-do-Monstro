@@ -1,3 +1,4 @@
+
 new Vue({
     el: "#app",
     data: {
@@ -13,9 +14,11 @@ new Vue({
         resultado: 'Jogando',
         fim: false,
         stop: true,
+        mobs: []
     },
     computed: {
         playerHealth() {
+            
             return {
                 height: '100%',
                 width: `${this.player}%`,
